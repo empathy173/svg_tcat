@@ -13,17 +13,6 @@ void Object::Render(const RenderContext& context) const {
     context.out << std::endl;
 }
 
-// ---------- RGB -----------
-
-Rgb::Rgb(uint8_t r, uint8_t g, uint8_t b) 
-    : red(r), green(g), blue(b) {
-}
-
-// ---------- RGBA -----------
-
-Rgba::Rgba(uint8_t r, uint8_t g, uint8_t b, double o) 
-    : Rgb(r, g, b), opacity(o){
-}
 
 // ---------- Color ---------
 
@@ -35,20 +24,14 @@ void PrintColor (std::ostream& out, std::string& color){
     out << color;
 }
 
-void PrintColor (std::ostream& out, Rgb& rgb){
-    out << "rgb("sv << static_cast<short>(rgb.red)        << ","sv
-                    << static_cast<short>(rgb.green)      << ","sv
-                    << static_cast<short>(rgb.blue)       << ")"sv;
-}
-
-void PrintColor (std::ostream& out, Rgba& rgba){
+void PrintColor (std::ostream& out, domain::Rgba& rgba){
     out << "rgba("sv << static_cast<short>(rgba.red)      << ","sv
                      << static_cast<short>(rgba.green)    << ","sv
                      << static_cast<short>(rgba.blue)     << ","sv
                      << rgba.opacity  << ")"sv;
 }
 
-std::ostream& operator<< (std::ostream& out, const Color& color){
+std::ostream& operator<< (std::ostream& out, const domain::Color& color){
     std::visit(
         [&out](auto value){
             PrintColor(out, value);

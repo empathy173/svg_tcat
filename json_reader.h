@@ -38,7 +38,7 @@ public:
     JsonReader() = default;
 
     // Обработка запроса
-    void RequestProcessing (trans_cat::TransportCatalogue& catalogue, std::istream& in, std::ostream& out);
+    void RequestProcessing (trans_cat::TransportCatalogue& catalogue, domain::RenderSettings& renderSettings, std::istream& in, std::ostream& out);
 
     // Заполнение каталога из json файла
     std::pair<std::string, geo::Coordinates> GetStopFromRequest (const json::Dict& request);

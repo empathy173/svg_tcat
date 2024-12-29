@@ -1,20 +1,12 @@
 #pragma once
 
-/*
- * В этом файле вы можете разместить классы/структуры, которые являются частью предметной области (domain)
- * вашего приложения и не зависят от транспортного справочника. Например Автобусные маршруты и Остановки. 
- *
- * Их можно было бы разместить и в transport_catalogue.h, однако вынесение их в отдельный
- * заголовочный файл может оказаться полезным, когда дело дойдёт до визуализации карты маршрутов:
- * визуализатор карты (map_renderer) можно будет сделать независящим от транспортного справочника.
- *
- * Если структура вашего приложения не позволяет так сделать, просто оставьте этот файл пустым.
- *
- */
 #include "geo.h"
 
 #include <string>
 #include <vector>
+#include <array>
+#include <cstdint>
+#include <variant>
 
 namespace domain {
 
@@ -34,6 +26,33 @@ struct BusStat{
     int uniq_stop_count = 0;
     double route_geo_lenght = 0.0;
     double route_lenght = 0.0;
+};
+
+class Rgba {
+public:
+    Rgba() = default;
+    Rgba(uint8_t r, uint8_t g, uint8_t b, double o = 1.0);
+
+    uint8_t red = 0;
+    uint8_t green = 0;
+    uint8_t blue = 0;
+    double opacity = 1.0;
+};
+    using Color = std::variant<std::monostate, std::string, domain::Rgba>;
+
+    struct RenderSettings{
+    std::vector<Color> color_palette = {};
+    std::array<double, 2> bus_label_offset ={};
+    std::array<double, 2> stop_label_offset= {};
+    Color underlayer_color = {};
+    double width = 0;
+    double height = 0;
+    double padding = 0;
+    double line_width = 0;
+    double stop_radius = 0;
+    double underlayer_width= 0;
+    int bus_label_font_size = 0;
+    int stop_label_font_size = 0;
 };
 
 } // namespace Domain

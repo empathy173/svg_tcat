@@ -7,6 +7,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <domain.h>
 
 namespace svg {
 
@@ -69,42 +70,18 @@ private:
     virtual void RenderObject(const RenderContext& context) const = 0;
 };
 
-// ---------- RGB -----------
-
-class Rgb {
-public:
-    Rgb() = default;
-    Rgb(uint8_t r, uint8_t g, uint8_t b);
-
-    uint8_t red = 0;
-    uint8_t green = 0;
-    uint8_t blue = 0;
-};
-
-// ---------- RGBA -----------
-
-class Rgba : public Rgb{
-public:
-    Rgba() = default;
-    Rgba(uint8_t r, uint8_t g, uint8_t b, double o);
-
-    double opacity = 1.0;
-};
 
 // ---------- Color ---------
 
-using Color = std::variant<std::monostate, std::string, Rgb, Rgba>;
-//using Color = std::string;
-inline const Color NoneColor{"none"};
+inline const domain::Color NoneColor{"none"};
 
 
 
 void PrintColor (std::ostream& out, std::monostate);
 void PrintColor (std::ostream& out, std::string& color);
-void PrintColor (std::ostream& out, Rgb& rgb);
-void PrintColor (std::ostream& out, Rgba& rgba);
+void PrintColor (std::ostream& out, domain::Rgba& rgba);
 
-std::ostream& operator<< (std::ostream& out, const Color& color);
+std::ostream& operator<< (std::ostream& out, const domain::Color& color);
 
 // ---------- StrokeLineCap -----------
 
@@ -135,12 +112,12 @@ std::ostream& operator<< (std::ostream& stream, const StrokeLineJoin& stroke_lin
 template <typename Owner>
 class PathProps {
 public:
-    Owner& SetFillColor (Color color) {
+    Owner& SetFillColor (domain::Color color) {
         fill_color_ = std::move(color);
         return AsOwner();
     }
 
-    Owner& SetStrokeColor (Color color) {
+    Owner& SetStrokeColor (domain::Color color) {
         stroke_color_ = std::move(color);
         return AsOwner();
     }
@@ -193,10 +170,10 @@ private:
     }
 
     // Цвет заливки
-    std::optional<Color> fill_color_;
+    std::optional<domain::Color> fill_color_;
 
     // цвет контура
-    std::optional<Color> stroke_color_;
+    std::optional<domain::Color> stroke_color_;
 
     // Толщина линии
     double stroke_width_ = 0.0;

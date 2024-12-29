@@ -12,3 +12,9 @@
  * Если структура вашего приложения не позволяет так сделать, просто оставьте этот файл пустым.
  *
  */
+
+namespace domain {
+    Rgba::Rgba(uint8_t r, uint8_t g, uint8_t b, double o)
+            : red(r), green(g), blue(b), opacity(o) {
+    }
+}

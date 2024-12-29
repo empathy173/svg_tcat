@@ -18,5 +18,5 @@ int main() {
     trans_cat::TransportCatalogue cat;
     json_reader::JsonReader reader;
     // reader.RequestProcessing(cat, std::cin, std::cout);
-    reader.RequestProcessing(cat, std::cin, std::cout);
+ //   reader.RequestProcessing(cat, std::cin, std::cout);
 }
